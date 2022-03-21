@@ -15,8 +15,7 @@ const SingleProductPage = () => {
     const [yolo, setYolo] = useState(new Date())
     const [rangeCalTrigger, setRangeCalTrigger] = useState(false)
     const [singleProduct, setSingleProduct] = useState()
-    console.log(allDays)
-    console.log(selectedDay)
+    console.log(singleProduct)
 
     useEffect(() => {
         fetch('http://localhost:4000/getsingleproduct/' + id)
@@ -88,7 +87,7 @@ const SingleProductPage = () => {
                     <img src={singleProduct.photo} alt=""/>
                 </div>
                 <div className="product-description-data">
-                    <h1 className="product-city">{singleProduct.city}</h1>
+                    <h1 className="product-city">{singleProduct.city.slice(0,1).toUpperCase() + singleProduct.city.slice(1, singleProduct.city.length)}</h1>
                     <p className="product-description">{singleProduct.description}</p>
                     <h3 className="product-price">${singleProduct.price} <span>/ night</span></h3>
 
