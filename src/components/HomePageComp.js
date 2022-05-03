@@ -1,29 +1,25 @@
 import React, {useContext, useState} from 'react';
-import MappedProductComponent from "./MappedProductComponent";
 import MainContext from "../context/MainContext";
-import FilterComponent from "./FilterComponent";
 import SignUpComp from "./SignUpComp";
+import TopicComp from "./TopicComp";
 
 
 const HomePageComp = () => {
-    const {product, user} = useContext(MainContext)
+    const {topic, user} = useContext(MainContext)
     const [filterTrigger, setFilterTrigger] = useState(false)
     return (
         <>
             {!Boolean(user) && <SignUpComp/>}
             <div className="container">
-                <p className='btn btn--filter' style={{display: !user ? 'none' : 'block'}} onClick={() => setFilterTrigger(!filterTrigger)}>Start your search</p>
-                {filterTrigger && <FilterComponent/>}
                 <div style={{display: user ? 'block' : 'none'}}>
                     <h1 className="homepage__title">
-                        Inspiration for your next booking
+                        There's lots to discuss
                     </h1>
-                    <div className="products-map-wrap row">
-                        {product.map?.((x, i) =>
-                            <MappedProductComponent key={i} x={x}/>
-                        )}
-                    </div>
                 </div>
+                {topic?.map((x, i) =>
+                    <TopicComp item={x} key={i}/>
+                )}
+
 
             </div>
         </>

@@ -7,14 +7,14 @@ import {useEffect, useState} from "react";
 import MainContext from "./context/MainContext";
 import Navbar from "./components/Navbar";
 import UploadProductPage from "./pages/UploadProductPage";
-import SingleProductPage from "./pages/SingleProductPage";
+import TopicInnerPage from "./pages/TopicInnerPage";
+import MyAccountPage from "./pages/MyAccountPage";
+
 
 function App() {
     const [user, setUser] = useState()
-    const [product, setProduct] = useState([])
+    const [topic, setTopic] = useState()
     const [updateProductTrigger, setUpdateProductTrigger] = useState(false)
-    const [allDays, setAllDays] = useState([])
-    const [selectedDay, setSelectedDay] = useState([])
 
 
 
@@ -27,24 +27,24 @@ function App() {
                     setUser(data)
                 })
         }
-        fetch(`http://localhost:4000/getallproducts/`)
+        fetch(`http://localhost:4000/getAllTopics/`)
             .then(res => res.json())
             .then(data => {
-                setProduct(data)
+                setTopic(data)
             })
     }, [])
 
     useEffect(() => {
-        fetch(`http://localhost:4000/getallproducts/`)
+        fetch(`http://localhost:4000/getAllTopics/`)
             .then(res => res.json())
             .then(data => {
-                setProduct(data)
+                setTopic(data)
             })
     }, [updateProductTrigger])
 
     return (
         <div className="container">
-            <MainContext.Provider value={{user, setUser, product, setProduct, updateProductTrigger, setUpdateProductTrigger, allDays, setAllDays, selectedDay, setSelectedDay}}>
+            <MainContext.Provider value={{user, setUser, updateProductTrigger, setUpdateProductTrigger, topic, setTopic}}>
                 <BrowserRouter>
                     <Navbar/>
                     <Routes>
@@ -52,7 +52,8 @@ function App() {
                         <Route path='/signUp' element={<SignUpPage/>}/>
                         <Route path='/login' element={<LoginPage/>}/>
                         <Route path='/createProduct' element={<UploadProductPage/>}/>
-                        <Route path='/product/:id' element={<SingleProductPage/>}/>
+                        <Route path='/topic/:id' element={<TopicInnerPage/>}/>
+                        <Route path='/myAccount/:email' element={<MyAccountPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </MainContext.Provider>
